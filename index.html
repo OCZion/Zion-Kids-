@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zion Kids</title>
+<style>
+:root{
+  --purple:#6b3fd4; --purple2:#8c63e8; --pink:#f05a8a; --navy:#17204a;
+  --bg:#faf9ff; --card:#fff; --muted:#6f748b; --line:#ece9f6;
+  --green:#35a66f; --yellow:#f2b84b; --red:#e95757; --blue:#4e9bd6;
+}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--navy)}
+button,input,select,textarea{font:inherit} button{cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{width:240px;background:#211d52;color:#fff;padding:22px 16px;position:fixed;top:0;bottom:0}
+.logo{font-size:30px;font-weight:800;letter-spacing:-1px;margin:4px 8px 3px}
+.logo span{color:#f05a8a}.tag{font-size:12px;color:#d8d4ef;margin:0 8px 25px}
+.nav button{display:block;width:100%;border:0;background:transparent;color:#eee;text-align:left;padding:12px 13px;border-radius:11px;margin:4px 0}
+.nav button.active,.nav button:hover{background:#7447dc;color:#fff}
+.nav small{display:block;color:#bdb8df;margin:18px 10px 7px}
+.main{margin-left:240px;width:calc(100% - 240px);padding:28px;max-width:1500px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+h1{margin:0;font-size:28px}.subtitle{color:var(--muted);margin-top:5px}
+.profile{background:#fff;border:1px solid var(--line);padding:9px 13px;border-radius:14px}
+.grid{display:grid;gap:16px}.four{grid-template-columns:repeat(4,1fr)}.two{grid-template-columns:1.4fr 1fr}.classes{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 4px 16px rgba(41,26,92,.04)}
+.stat{display:flex;gap:12px;align-items:center}.icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-size:22px;background:#f0eaff}
+.stat strong{display:block;font-size:23px}.stat span{font-size:12px;color:var(--muted)}
+.class-card{min-height:190px;position:relative;overflow:hidden}.class-card .kid{font-size:52px}.class-card h3{margin:8px 0 3px}.class-card p{margin:0;color:var(--muted);font-size:13px}
+.pill{display:inline-block;padding:5px 9px;border-radius:99px;font-size:11px;margin-top:12px;background:#f2effb}
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.action{border:0;border-radius:15px;padding:17px;text-align:left;background:#f2edff;color:var(--navy)}.action:nth-child(2){background:#eaf8ef}.action:nth-child(3){background:#fff0f1}.action:nth-child(4){background:#eaf4fb}.action b{display:block;margin-bottom:5px}.action span{font-size:12px;color:var(--muted)}
+.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:13px 10px;border-bottom:1px solid var(--line);text-align:left;font-size:13px}.table th{color:var(--muted);font-weight:600}
+.status{padding:5px 9px;border-radius:99px;font-size:11px}.ok{background:#e7f7ee;color:#217c50}.pending{background:#fff3dc;color:#99630c}.danger{background:#ffe8e8;color:#a72c2c}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.toolbar select,.toolbar input,.field input,.field select,.field textarea{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff}
+.btn{background:var(--purple);color:#fff;border:0;border-radius:11px;padding:10px 15px}.btn.secondary{background:#eeeaf9;color:var(--navy)}
+.page{display:none}.page.active{display:block}
+.form{display:grid;gap:14px;max-width:760px}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}.field input,.field select,.field textarea{width:100%}.field textarea{min-height:110px;resize:vertical}
+.notice{padding:13px 15px;background:#fff6dc;border-radius:13px;color:#77571b;font-size:13px}
+.footer-note{color:var(--muted);font-size:12px;text-align:center;margin-top:30px}
+@media(max-width:1050px){.four,.classes{grid-template-columns:repeat(2,1fr)}.actions{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.sidebar{width:72px;padding:18px 8px}.logo{font-size:0}.logo:after{content:"ZK";font-size:22px}.tag,.nav span,.nav small{display:none}.nav button{text-align:center;font-size:0}.nav button:before{content:"•";font-size:20px}.main{margin-left:72px;width:calc(100% - 72px);padding:18px}.four,.classes,.two{grid-template-columns:1fr}.top{align-items:flex-start;gap:10px}.actions{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="logo">Zion <span>Kids</span> ♥</div>
+  <p class="tag">Growing hearts. Building faith.</p>
+  <div class="nav">
+    <button class="active" onclick="show('dashboard',this)">🏠 <span>Dashboard</span></button>
+    <button onclick="show('reports',this)">📋 <span>All Reports</span></button>
+    <button onclick="show('attendance',this)">👥 <span>Attendance</span></button>
+    <button onclick="show('incident',this)">🚨 <span>Incident Report</span></button>
+    <button onclick="show('classes',this)">♥ <span>Classes</span></button>
+    <button onclick="show('lessons',this)">📖 <span>Lessons</span></button>
+    <button onclick="show('announcements',this)">📢 <span>Announcements</span></button>
+    <button onclick="show('schedule',this)">📅 <span>Schedule</span></button>
+    <button onclick="show('supplies',this)">📦 <span>Supply Requests</span></button>
+  </div>
+</aside>
+
+<main class="main">
+<section id="dashboard" class="page active">
+  <div class="top"><div><h1>Zion Kids ♥</h1><div class="subtitle">Saturday Ministry Dashboard • August 15, 2026</div></div><div class="profile">Leader ▾</div></div>
+  <div class="grid four">
+    <div class="card stat"><div class="icon">👧</div><div><strong>61</strong><span>Total Children</span></div></div>
+    <div class="card stat"><div class="icon">👩‍🏫</div><div><strong>18</strong><span>Teachers & Helpers</span></div></div>
+    <div class="card stat"><div class="icon">📋</div><div><strong>4 / 4</strong><span>Reports Submitted</span></div></div>
+    <div class="card stat"><div class="icon">♥</div><div><strong>98%</strong><span>Attendance Rate</span></div></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h2>Our Classes</h2>
+    <div class="grid classes">
+      <div class="class-card card" style="background:#eefaf1"><div class="kid">👶</div><h3>Nursery</h3><p>Infant – 2</p><span class="pill">1 class</span></div>
+      <div class="class-card card" style="background:#fff7dc"><div class="kid">👧</div><h3>Pretty Angels</h3><p>3 – 6</p><span class="pill">1 class</span></div>
+      <div class="class-card card" style="background:#edf5ff"><div class="kid">👦</div><h3>Little Disciples Boys</h3><p>7 – 12</p><span class="pill">7–10 &nbsp; | &nbsp; 11–12</span></div>
+      <div class="class-card card" style="background:#fff0f5"><div class="kid">👧</div><h3>Little Disciples Girls</h3><p>7 – 12</p><span class="pill">7–10 &nbsp; | &nbsp; 11–12</span></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h2>Quick Actions</h2>
+    <div class="actions">
+      <button class="action" onclick="show('reports')"><b>📋 All Reports</b><span>See every class report in one place</span></button>
+      <button class="action" onclick="show('attendance')"><b>👥 Attendance</b><span>Review Saturday attendance</span></button>
+      <button class="action" onclick="show('incident')"><b>🚨 Incident Report</b><span>Review safety or incident reports</span></button>
+      <button class="action" onclick="show('lessons')"><b>📖 Today's Lesson</b><span>View lesson information</span></button>
+    </div>
+  </div>
+</section>
+
+<section id="reports" class="page">
+  <div class="top"><div><h1>All Class Reports</h1><div class="subtitle">All Saturday teacher reports in one place</div></div><button class="btn" onclick="alert('Export feature will be connected to the database in the next build.')">Export</button></div>
+  <div class="card">
+    <div class="toolbar">
+      <input placeholder="Search teacher or class" oninput="filterReports(this.value)">
+      <select><option>Saturday, Aug 15, 2026</option><option>Previous Saturday</option><option>This Month</option></select>
+      <select><option>All Classes</option><option>Nursery</option><option>Pretty Angels</option><option>Little Disciples Boys</option><option>Little Disciples Girls</option></select>
+      <select><option>All Report Types</option><option>Daily</option><option>Monthly</option><option>Quarterly</option><option>Incident</option></select>
+    </div>
+    <div class="table-wrap"><table class="table" id="reportTable"><thead><tr><th>Class</th><th>Teacher</th><th>Date</th><th>Attendance</th><th>Report</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>🍼 Nursery</td><td>Maria</td><td>Aug 15</td><td>8 / 10</td><td>Daily</td><td><span class="status ok">Submitted</span></td></tr>
+      <tr><td>👼 Pretty Angels</td><td>Sarah</td><td>Aug 15</td><td>12 / 14</td><td>Daily</td><td><span class="status ok">Submitted</span></td></tr>
+      <tr><td>👦 Little Disciples Boys</td><td>David</td><td>Aug 15</td><td>11 / 13</td><td>Daily</td><td><span class="status ok">Submitted</span></td></tr>
+      <tr><td>👧 Little Disciples Girls</td><td>Ana</td><td>Aug 15</td><td>12 / 15</td><td>Daily</td><td><span class="status pending">Pending</span></td></tr>
+    </tbody></table></div>
+  </div>
+</section>
+
+<section id="attendance" class="page">
+  <div class="top"><div><h1>Saturday Attendance</h1><div class="subtitle">View attendance by class and age group</div></div></div>
+  <div class="grid classes">
+    <div class="card"><h3>🍼 Nursery</h3><p>Present <b>8</b> of 10</p><span class="status ok">80%</span></div>
+    <div class="card"><h3>👼 Pretty Angels</h3><p>Present <b>12</b> of 14</p><span class="status ok">86%</span></div>
+    <div class="card"><h3>👦 Little Disciples Boys</h3><p>7–10: <b>7/8</b> • 11–12: <b>4/5</b></p><span class="status ok">85%</span></div>
+    <div class="card"><h3>👧 Little Disciples Girls</h3><p>7–10: <b>8/9</b> • 11–12: <b>4/6</b></p><span class="status ok">80%</span></div>
+  </div>
+</section>
+
+<section id="incident" class="page">
+  <div class="top"><div><h1>Incident Report</h1><div class="subtitle">For injuries, safety concerns, or serious situations</div></div></div>
+  <div class="card">
+    <div class="notice">Sensitive incident information should only be accessible to authorized Zion Kids leaders.</div>
+    <form class="form" onsubmit="event.preventDefault(); alert('Prototype saved. A real version will securely save this to the Zion Kids database.');">
+      <div class="field"><label>Class</label><select><option>Nursery</option><option>Pretty Angels</option><option>Little Disciples Boys</option><option>Little Disciples Girls</option></select></div>
+      <div class="field"><label>Incident type</label><select><option>Injury</option><option>Behavior</option><option>Safety concern</option><option>Other</option></select></div>
+      <div class="field"><label>What happened?</label><textarea placeholder="Describe what happened factually..."></textarea></div>
+      <div class="field"><label>Action taken</label><textarea placeholder="What action was taken and who was notified?"></textarea></div>
+      <button class="btn">Submit Incident Report</button>
+    </form>
+  </div>
+</section>
+
+<section id="classes" class="page">
+  <div class="top"><div><h1>Classes</h1><div class="subtitle">Zion Kids classroom structure</div></div></div>
+  <div class="grid classes">
+    <div class="card"><div class="kid">👶</div><h2>Nursery</h2><p>Infant – 2</p><p><b>One class</b></p></div>
+    <div class="card"><div class="kid">👼</div><h2>Pretty Angels</h2><p>3 – 6</p><p><b>One class</b></p></div>
+    <div class="card"><div class="kid">👦</div><h2>Little Disciples Boys</h2><p>7 – 12</p><p><b>One class</b> • age filters: 7–10 and 11–12</p></div>
+    <div class="card"><div class="kid">👧</div><h2>Little Disciples Girls</h2><p>7 – 12</p><p><b>One class</b> • age filters: 7–10 and 11–12</p></div>
+  </div>
+</section>
+
+<section id="lessons" class="page">
+  <div class="top"><div><h1>Lessons</h1><div class="subtitle">Saturday lesson and activity information</div></div></div>
+  <div class="card"><h2>Today's Lesson</h2><p><b>Lesson title:</b> Add your lesson title here</p><p><b>Bible verse:</b> Add your verse here</p><p><b>Activities:</b> Add activities, crafts, discussion questions, or songs here.</p><button class="btn secondary">Add / Edit Lesson</button></div>
+</section>
+
+<section id="announcements" class="page">
+  <div class="top"><div><h1>Announcements</h1><div class="subtitle">Messages for Zion Kids teachers and leaders</div></div></div>
+  <div class="card"><h3>Saturday Teacher Meeting</h3><p>Add announcements here for teachers and helpers.</p><hr style="border:0;border-top:1px solid var(--line)"><h3>Upcoming Zion Kids Event</h3><p>Add event details, reminders, and important information.</p></div>
+</section>
+
+<section id="schedule" class="page">
+  <div class="top"><div><h1>Schedule</h1><div class="subtitle">Saturday teacher and class schedule</div></div></div>
+  <div class="card"><h3>Saturday</h3><p>Nursery — Teacher assignment</p><p>Pretty Angels — Teacher assignment</p><p>Little Disciples Boys — Teacher assignment</p><p>Little Disciples Girls — Teacher assignment</p></div>
+</section>
+
+<section id="supplies" class="page">
+  <div class="top"><div><h1>Supply Requests</h1><div class="subtitle">Teachers can request classroom supplies</div></div></div>
+  <div class="card"><form class="form" onsubmit="event.preventDefault();alert('Prototype request saved.');"><div class="field"><label>Class</label><select><option>Nursery</option><option>Pretty Angels</option><option>Little Disciples Boys</option><option>Little Disciples Girls</option></select></div><div class="field"><label>What do you need?</label><textarea placeholder="List supplies and quantities..."></textarea></div><button class="btn">Submit Request</button></form></div>
+</section>
+
+<div class="footer-note">Zion Kids • Saturday Ministry • Prototype — no child information should be entered into this demo.</div>
+</main>
+</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function filterReports(q){
+  q=q.toLowerCase();
+  document.querySelectorAll('#reportTable tbody tr').forEach(r=>{
+    r.style.display=r.innerText.toLowerCase().includes(q)?'':'none';
+  });
+}
+</script>
+</body>
+</html>
